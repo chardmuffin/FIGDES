@@ -1,0 +1,142 @@
+{
+	"HELP": {
+		"acceptsArgs": true,
+		"desc": "Provides information for FIGDES2020 commands and patches",
+		"usage": "HELP\n                    HELP [command]\n                    HELP [patch-name]\n\n    command - the name of the command to display help information about\n    patch-name - the name of the patch to display help information about"
+	},
+	"CODE": {
+		"acceptsArgs": true,
+		"desc": "Used to code patches for enhancing game features and unlocking\n                    new game content",
+		"usage" : "CODE [patch-name]\n\n    patch-name - the name of the patch to be coded"
+	},
+	"PLAY": {
+		"acceptsArgs": false,
+		"desc": "Starts game!",
+		"usage" : "PLAY\n\nType PLAY with no parameters."
+	},
+	"README": {
+		"acceptsArgs": false,
+		"desc": "Displays a list of new features included in the current game\n                    version",
+		"usage": "README\n\nType README with no parameters."
+	},
+	"PATCHES": {
+		"acceptsArgs": false,
+		"desc": "Displays a list of all available game features for coding",
+		"usage": "PATCHES\n\nType PATCHES with no parameters."
+	},
+	"PLAN": {
+		"acceptsArgs": true,
+		"desc": "Used to plan out complicated patches before they are coded",
+		"usage": "PLAN [patch-name]\n\n    patch-name - the name of the patch to plan for"
+	},
+	"SETNAME": {
+		"acceptsArgs": true,
+		"desc": "Sets the developer's name",
+		"usage": "SETNAME [name]\n\n    name - the developer's new name"
+	},
+	"SAVE": {
+		"acceptsArgs": false,
+		"desc": "Saves the current game progress",
+		"usage": "SAVE\n\nType SAVE with no parameters."
+	},
+	"H": {
+		"acceptsArgs": true,
+		"desc": "Shortcut for HELP command",
+		"usage": "H [command]\n\n    command - the name of the command to display help information about"
+	},
+	"C": {
+		"acceptsArgs": true,
+		"desc": "Shortcut for CODE command",
+		"usage": "C [patch-name]\n\n    patch-name - the name of the patch to be coded"
+	},
+	"S": {
+		"acceptsArgs": false,
+		"desc": "Shortcut for SAVE command",
+		"usage": "S\n\nType S with no parameters."
+	},
+	"R": {
+		"acceptsArgs": false,
+		"desc": "Shortcut for README command",
+		"usage": "R\n\nType R with no parameters."
+	},
+	"P": {
+		"acceptsArgs": true,
+		"desc": "Shortcut for PLAN command",
+		"usage": "P [patch-name]\n\n    patch-name - the name of the patch to plan for"
+	},
+	"GETSTATS": {
+		"acceptsArgs": false,
+		"desc": "Outputs a list of the current game statistics",
+		"usage": "GETSTATS\n\nType GETSTATS with no parameters."
+	},
+	"TOGGLEGUI": {
+		"acceptsArgs": false,
+		"desc": "Toggles visibility of the Graphical User Interface (The GUI is\n                    turned off by default).",
+		"usage": "TOGGLEGUI\n\nType TOGGLEGUI with no parameters."
+	},
+	"SETPREF": {
+		"acceptsArgs": true,
+		"desc": "Configures game preferences",
+		"usage":"SETPREF [preference-name = value]\n\n    preference-name - the name of the preference to be set\n    value - the preference's new value\n\nExample: SETPREF musicVolume = 5"
+	},
+	"PREFS": {
+		"acceptsArgs": false,
+		"desc": "Displays the current game preferences and their respective values",
+		"usage":"PREFS\n\nType PREFS with no parameters."
+	},
+	"GETMONEY": {
+		"acceptsArgs": false,
+		"desc": "Displays the current savings amount",
+		"usage":"GETMONEY\n\nType GETMONEY with no parameters."
+	},
+	"GETLUCK": {
+		"acceptsArgs": false,
+		"desc": "Displays the current value of the \"luck\" attribute",
+		"usage":"GETLUCK\n\nType GETLUCK with no parameters."
+	},
+	"GETENERGY": {
+		"acceptsArgs": false,
+		"desc": "Displays the current value of the \"energy\" attribute",
+		"usage":"GETENERGY\n\nType GETENERGY with no parameters."
+	},
+	"GETWISDOM": {
+		"acceptsArgs": false,
+		"desc": "Displays the current value of the \"wisdom\" attribute",
+		"usage":"GETWISDOM\n\nType GETWISDOM with no parameters."
+	},
+	"GETHUNGER": {
+		"acceptsArgs": false,
+		"desc": "Displays the current value of the \"hunger\" attribute",
+		"usage":"GETHUNGER\n\nType GETHUNGER with no parameters."
+	},
+	"GETINSANITY": {
+		"acceptsArgs": false,
+		"desc": "Displays the current value of the \"insanity\" attribute",
+		"usage":"GETINSANITY\n\nType GETINSANITY with no parameters."
+	},
+	"BUYFOOD": {
+		"acceptsArgs": true,
+		"desc": "Purchases edible food for developer consumption at $20 per food",
+		"usage":"BUYFOOD [quantity]\n\n    quantity - the number of edible food to be bought."
+	},
+	"EAT": {
+		"acceptsArgs": false,
+		"desc": "Consumes 1 food. Decreases hunger by 3.",
+		"usage":"EAT\n\nType EAT with no parameters."
+	},
+	"TOGGLEMUSIC": {
+		"acceptsArgs": false,
+		"desc": "Toggles the background music on/off",
+		"usage":"TOGGLEMUSIC\n\nType TOGGLEMUSIC with no parameters."
+	},
+	"SETMUSIC": {
+		"acceptsArgs": true,
+		"desc": "Changes the background music to a different track",
+		"usage":"SETMUSIC [track-number]\n\n    track-number - the number of the music track to be played"
+	},
+	"GETMUSIC": {
+		"acceptsArgs": false,
+		"desc": "Displays available music tracks",
+		"usage":"GETMUSIC\n\nType GETMUSIC with no parameters."
+	}
+}

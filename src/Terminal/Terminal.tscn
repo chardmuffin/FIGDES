@@ -1,0 +1,203 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Terminal/developer.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Terminal/Terminal.gd" type="Script" id=2]
+[ext_resource path="res://Terminal/icon.png" type="Texture" id=3]
+[ext_resource path="res://data/computer.theme" type="Theme" id=4]
+[ext_resource path="res://Terminal/caret.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 8
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 8
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 8
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0, 0, 0, 1 )
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0, 0, 0, 1 )
+corner_detail = 1
+
+[sub_resource type="DynamicFont" id=9]
+size = 8
+font_data = ExtResource( 1 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ ExtResource( 5 ), null ],
+"loop": true,
+"name": "caret",
+"speed": 4.0
+} ]
+
+[node name="Terminal" type="Panel"]
+margin_left = 14.0
+margin_top = 35.0
+margin_right = 546.0
+margin_bottom = 342.0
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HeaderContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 532.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 0, 15 )
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HeaderBar" type="Panel" parent="VBoxContainer/HeaderContainer"]
+margin_right = 532.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 0, 15 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HeaderContainer/HeaderBar"]
+margin_right = 15.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 15, 15 )
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/HeaderContainer/HeaderBar"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 15.0
+margin_top = -2.5
+margin_right = 158.0
+margin_bottom = 9.5
+rect_min_size = Vector2( 0, 10 )
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = " Developer Console"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="Button" parent="VBoxContainer/HeaderContainer/HeaderBar"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -15.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 15, 15 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.745098, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.294118, 0, 0, 1 )
+text = "x"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 19.0
+margin_right = 532.0
+margin_bottom = 307.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 4 )
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+margin_right = 532.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+
+[node name="Output" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_right = 532.0
+margin_bottom = 8.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
+text = "output"
+autowrap = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_top = 12.0
+margin_right = 532.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 10 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="TerminalPrompt" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_right = 36.0
+margin_bottom = 8.0
+rect_min_size = Vector2( 0, 8 )
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 6 )
+text = "prompt"
+
+[node name="TerminalLineInput" type="LineEdit" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 36.0
+margin_right = 532.0
+margin_bottom = 8.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_styles/focus = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
+max_length = 30
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+caret_blink_speed = 10.0
+
+[node name="Caret" type="AnimatedSprite" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+frames = SubResource( 10 )
+animation = "caret"
+frame = 1
+playing = true
+centered = false
+[connection signal="gui_input" from="VBoxContainer" to="." method="_on_VBoxContainer_gui_input"]
+[connection signal="gui_input" from="VBoxContainer/HeaderContainer/HeaderBar" to="." method="_on_HeaderBar_gui_input"]
+[connection signal="pressed" from="VBoxContainer/HeaderContainer/HeaderBar/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="gui_input" from="VBoxContainer/ScrollContainer" to="." method="_on_ScrollContainer_gui_input"]
+[connection signal="sort_children" from="VBoxContainer/ScrollContainer" to="." method="_on_ScrollContainer_sort_children"]
+[connection signal="gui_input" from="VBoxContainer/ScrollContainer/VBoxContainer" to="." method="_on_VBoxContainer_gui_input"]
+[connection signal="resized" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalPrompt" to="." method="_on_TerminalPrompt_resized"]
+[connection signal="focus_entered" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalLineInput" to="." method="_on_TerminalLineInput_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalLineInput" to="." method="_on_TerminalLineInput_focus_exited"]
+[connection signal="gui_input" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalLineInput" to="." method="_on_TerminalLineInput_gui_input"]
+[connection signal="text_changed" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalLineInput" to="." method="_on_TerminalLineInput_text_changed"]
+[connection signal="text_entered" from="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalLineInput" to="." method="_on_TerminalLineInput_text_entered"]

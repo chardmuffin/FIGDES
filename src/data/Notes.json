@@ -1,0 +1,35 @@
+{
+	"first": {
+		"1": "Good planning means more organized code...||This will be necessary because Fully Immersive Game Developer Experience Simulator 2020 will probably get pretty complicated.|@|@!!@|I have an idea! I should also write down all my thoughts when planning this game, and later I can copy/paste these notes into the game. Wow, so meta!@@|The core of the game will be the list of completed patches. This will track the new features the player chooses to code into the game, and each patch will unlock more features to be coded...|ok, enough planning for now...."
+	},
+	"save": {
+		"1": "Save plans:@|I will have to create a way for the player to save their game progress....|@will probably just have a whole bunch of global vars to keep track of important stuff. all that stuff can be loaded when the game is started...|ok, this shouldn't be very difficult"
+	},
+	"wisdom":{
+		"1": "wisdom plans!@|I will add a stat called |wisdom to the game so that...."
+	},
+	"energy":{
+		"1": "energy plans!@|I will add a stat called energy to the game so that...."
+	},
+	"money":{
+		"1": "money plans!@|I will add a stat called money to the game so that...."
+	},
+	"hunger":{
+		"1": "hunger plans!@|I will add a stat called hunger to the game so that...."
+	},
+	"insanity":{
+		"1": "insanity plans!@|I will add a stat called insanity to the game so that...."
+	},
+	"luck":{
+		"1": "luck plans!@|I will add a stat called luck to the game so that...."
+	},
+	"eat":{
+		"1": "eat plans!@|I will add a eat to the game so that...."
+	},
+	"buyFood":{
+		"1": "buyFood plans!@|I will add buyFood to the game so that...."
+	},
+	"music":{
+		"1": "music:@|super important! |The best games have the best music. Unfortunately I do not have the budget to hire a composer to write music for my game...|@I can use old non-copywrited music and make it 8-bit to fit the game style...|I should also make it so that new music tracks can be unlocked at different points in the game...|@Eventually I can also add a way for the player to put their favorite tracks on loop."
+	}
+}
