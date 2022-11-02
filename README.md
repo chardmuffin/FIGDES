@@ -9,7 +9,7 @@ This is a passion project I worked on during the summer of 2020. Unfortunately t
 The game is accessible at [https://chardmuffin.github.io/FIGDES/](https://chardmuffin.github.io/FIGDES/) and should be playable from most browsers (not Internet Explorer). It should work on iOS 15+ on Safari and most Android devices.
 
 ### Windows
-Alternatively, download the .exe file above if you are on Windows.
+Alternatively, download the two FIGDES files above and place them in their own directory if you are on Windows. Run the .exe file to start.
 
 ## Walkthrough
 To progress through the game, you need to code new features (patches). It is always helpful to type "patches" to see the list of updates that can be coded.
