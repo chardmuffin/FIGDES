@@ -6,7 +6,7 @@ Develop the game in-game as you play! You choose what aspects of the game to dev
 This is a passion project I worked on during the summer of 2020. Unfortunately the project cannot progress until I find the time to make sprites and art.
 
 ## Installation
-The game is accessible at [https://chardmuffin.github.io/FIGDES/](https://chardmuffin.github.io/FIGDES/) and should be playable from most browsers (not Internet Explorer). It should work on iOS 15+ on Safari and most Android devices.
+The game is accessible at [https://chardmuffin.github.io/FIGDES/](https://chardmuffin.github.io/FIGDES/) and should be playable from most browsers (not Internet Explorer). It does not currently work on mobile devices (unless you have a physical keyboard).
 
 ### Windows
 Alternatively, download the FIGDES.exe and FIGDES.pck files above and place them in their own directory if you are on Windows. Run the .exe file to start.
