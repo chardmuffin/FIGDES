@@ -1,13 +1,13 @@
 {
 	"HELP": {
 		"acceptsArgs": true,
-		"desc": "Provides information for FIGDES2020 commands and patches",
-		"usage": "HELP\n                    HELP [command]\n                    HELP [patch-name]\n\n    command - the name of the command to display help information about\n    patch-name - the name of the patch to display help information about"
+		"desc": "Provides information for FIGDES2020 commands and updates",
+		"usage": "HELP\n                    HELP [command]\n                    HELP [update-name]\n\n    command - the name of the command to display help information about\n    update-name - the name of the update to display help information about"
 	},
 	"CODE": {
 		"acceptsArgs": true,
-		"desc": "Used to code patches for enhancing game features and unlocking\n                    new game content",
-		"usage" : "CODE [patch-name]\n\n    patch-name - the name of the patch to be coded"
+		"desc": "Used to code updates for enhancing game features and unlocking\n                    new game content",
+		"usage" : "CODE [update-name]\n\n    update-name - the name of the update to be coded"
 	},
 	"PLAY": {
 		"acceptsArgs": false,
@@ -19,15 +19,15 @@
 		"desc": "Displays a list of new features included in the current game\n                    version",
 		"usage": "README\n\nType README with no parameters."
 	},
-	"PATCHES": {
+	"UPDATES": {
 		"acceptsArgs": false,
 		"desc": "Displays a list of all available game features for coding",
-		"usage": "PATCHES\n\nType PATCHES with no parameters."
+		"usage": "UPDATES\n\nType UPDATES with no parameters."
 	},
 	"PLAN": {
 		"acceptsArgs": true,
-		"desc": "Used to plan out complicated patches before they are coded",
-		"usage": "PLAN [patch-name]\n\n    patch-name - the name of the patch to plan for"
+		"desc": "Used to plan out complicated updates before they are coded",
+		"usage": "PLAN [update-name]\n\n    update-name - the name of the update to plan for"
 	},
 	"SETNAME": {
 		"acceptsArgs": true,
@@ -47,7 +47,7 @@
 	"C": {
 		"acceptsArgs": true,
 		"desc": "Shortcut for CODE command",
-		"usage": "C [patch-name]\n\n    patch-name - the name of the patch to be coded"
+		"usage": "C [update-name]\n\n    update-name - the name of the update to be coded"
 	},
 	"S": {
 		"acceptsArgs": false,
@@ -62,7 +62,7 @@
 	"P": {
 		"acceptsArgs": true,
 		"desc": "Shortcut for PLAN command",
-		"usage": "P [patch-name]\n\n    patch-name - the name of the patch to plan for"
+		"usage": "P [update-name]\n\n    update-name - the name of the update to plan for"
 	},
 	"GETSTATS": {
 		"acceptsArgs": false,

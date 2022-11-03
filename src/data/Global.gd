@@ -8,11 +8,11 @@ var time_mult = 1.0
 var curr_state = "idle"
 var version = [1,0,0] #stores values for version control
 var file_name = "" #name of the save file
-var prev_patch = "first" #name of the most recent patch
-var curr_patch = "" #name of the patch currently being coded
+var prev_update = "first" #name of the most recent update
+var curr_update = "" #name of the update currently being coded
 var random_count = 0 #number of days since last random event
 var days_count = 0 #number of days since starting game
-var patch_elapsed_time = 0 #track time since current patch started coding
+var update_elapsed_time = 0 #track time since current update started coding
 var energy = 10 # the current energy
 var max_energy = 10 #max number of energy
 var hunger = 4 #the current hunger level
@@ -30,8 +30,8 @@ var inside_timer #tracks time since last gone outside
 var exercise_timer #tracks time since last exercise
 var sleep_timer #tracks time since last sleep
 var my_name = "MyPhone" #the developer's name
-var prev_patches = ["first"] #if coded, the caseSensitive patchname will be added to the list
-var curr_plans = [["setName",0],["writeReq",0],["shortcuts",0]] # for tracking the current planning progress of patches
+var prev_updates = ["first"] #if coded, the caseSensitive updatename will be added to the list
+var curr_plans = [["setName",0],["writeReq",0],["shortcuts",0]] # for tracking the current planning progress of updates
 var hasAutoSave = false
 var showGUI = false
 var food_count = 0
@@ -58,11 +58,11 @@ func save_game():
 		"curr_state" : curr_state,
 		"file_name" : file_name,
 		"version" : version,
-		"prev_patch" : prev_patch,
-		"curr_patch" : curr_patch,
+		"prev_update" : prev_update,
+		"curr_update" : curr_update,
 		"random_count" : random_count,
 		"days_count" : days_count,
-		"patch_elapsed_time" : patch_elapsed_time,
+		"update_elapsed_time" : update_elapsed_time,
 		"max_energy" : max_energy,
 		"max_hunger" : max_hunger,
 		"max_wisdom" : max_wisdom,
@@ -75,7 +75,7 @@ func save_game():
 		"exercise_timer" : exercise_timer,
 		"sleep_timer" : sleep_timer,
 		"my_name" : my_name,
-		"prev_patches" : prev_patches,
+		"prev_updates" : prev_updates,
 		"energy" : energy,
 		"hunger" : hunger,
 		"wisdom" : wisdom,
@@ -120,11 +120,11 @@ func load_game():
 	curr_state = data["curr_state"]
 	file_name = data["file_name"]
 	version = data["version"]
-	prev_patch = data["prev_patch"]
-	curr_patch = data["curr_patch"]
+	prev_update = data["prev_update"]
+	curr_update = data["curr_update"]
 	random_count = data["random_count"]
 	days_count = data["days_count"]
-	patch_elapsed_time = data["patch_elapsed_time"]
+	update_elapsed_time = data["update_elapsed_time"]
 	max_energy = data["max_energy"]
 	max_hunger = data["max_hunger"]
 	max_wisdom = data["max_wisdom"]
@@ -150,7 +150,7 @@ func load_game():
 	current_music_file = data["current_music_file"]
 	unlocked_music = data["unlocked_music"]
 	notes = data["notes"]
-	prev_patches = data["prev_patches"]
+	prev_updates = data["prev_updates"]
 
 func canAfford(cost):
 	if cost > money:

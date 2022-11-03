@@ -37,9 +37,9 @@ func _ready():
 	add_child(gui)
 	gui.hide()
 	
-	if Global.prev_patches.has("GUI"):
+	if Global.prev_updates.has("GUI"):
 		init_GUI()
-	if Global.prev_patches.has("music"):
+	if Global.prev_updates.has("music"):
 		init_music()
 
 func on_reboot_terminal():
@@ -49,16 +49,16 @@ func on_reboot_terminal():
 		terminal.call_deferred("free")
 	
 	#if init notes for the very first time
-	if Global.prev_patch == "writeReq":
+	if Global.prev_update == "writeReq":
 		on_open_notes("first")
 		move_window_to_top(notepad)
 	
 	#if init music for the very first time
-	if Global.prev_patch == "music":
+	if Global.prev_update == "music":
 		init_music()
 	
 	#if init GUI for the very first time
-	if Global.prev_patch == "GUI":
+	if Global.prev_update == "GUI":
 		gui.show()
 	
 	#re-init terminal

@@ -1,6 +1,6 @@
 {
 	"first": {
-		"1": "Good planning means more organized code...||This will be necessary because Fully Immersive Game Developer Experience Simulator 2020 will probably get pretty complicated.|@|@!!@|I have an idea! I should also write down all my thoughts when planning this game, and later I can copy/paste these notes into the game. Wow, so meta!@@|The core of the game will be the list of completed patches. This will track the new features the player chooses to code into the game, and each patch will unlock more features to be coded...|ok, enough planning for now...."
+		"1": "Good planning means more organized code...||This will be necessary because Fully Immersive Game Developer Experience Simulator 2020 will probably get pretty complicated.|@|@!!@|I have an idea! I should also write down all my thoughts when planning this game, and later I can copy/paste these notes into the game. Wow, so meta!@@|The core of the game will be the list of completed updates. This will track the new features the player chooses to code into the game, and each update will unlock more features to be coded...|ok, enough planning for now...."
 	},
 	"save": {
 		"1": "Save plans:@|I will have to create a way for the player to save their game progress....|@will probably just have a whole bunch of global vars to keep track of important stuff. all that stuff can be loaded when the game is started...|ok, this shouldn't be very difficult"

@@ -5,9 +5,9 @@ var drag_position = null #used for moving the terminal window around
 var terminal_prompt_size #used for placing the caret
 var character_width = 0 #used for placing the caret
 var current_input_length = 0 #used for placing the caret
-var patchesDict = {} #entire JSON of all patches will be loaded here
+var updatesDict = {} #entire JSON of all updates will be loaded here
 var commandsDict = {} #entire JSON of all commands will be loaded here
-var available_patches = [] # list of patches available for coding
+var available_updates = [] # list of updates available for coding
 var output = "" # used for temporarily storing the terminal output
 var available_commands = [] # array of all currently available commands
 signal reboot_terminal
@@ -19,10 +19,10 @@ signal play
 #initialize cursor caret and things
 func _ready():
 	
-	#read patches file into patchesDict and commands file into commandsDict
-	_read_patches()
+	#read updates file into updatesDict and commands file into commandsDict
+	_read_updates()
 	_read_commands()
-	_set_visible_patches()
+	_set_visible_updates()
 	_set_visible_commands()
 	
 	#init promptline text
@@ -37,9 +37,9 @@ func _ready():
 		
 	#auto type "help on first time playing"
 	var init_input = ""
-	if Global.prev_patches.size() == 1:
+	if Global.prev_updates.size() == 1:
 		init_input = "help"
-	elif Global.prev_patches.has("shortcuts"):
+	elif Global.prev_updates.has("shortcuts"):
 		init_input = "r"
 	else:
 		init_input = "readme"
@@ -135,20 +135,20 @@ func _on_TerminalLineInput_focus_entered():
 func _on_ExitButton_pressed():
 	get_tree().quit()
 
-#reads the patches JSON and stores in the patchesDict
-func _read_patches():
+#reads the updates JSON and stores in the updatesDict
+func _read_updates():
 	var data_file = File.new()
-	if data_file.open("res://data/Patches.json", File.READ) != OK:
-		return "Error while reading from Patches.json file"
+	if data_file.open("res://data/Updates.json", File.READ) != OK:
+		return "Error while reading from Updates.json file"
 		
 	var data_text = data_file.get_as_text()
 	data_file.close()
 	
 	var data_parse = JSON.parse(data_text)
 	if data_parse.error != OK:
-		return "Error while parsing Patches.jason file"
+		return "Error while parsing Updates.json file"
 
-	patchesDict = data_parse.result
+	updatesDict = data_parse.result
 
 #reads the commands JSON and stores in the commandsDict
 func _read_commands():
@@ -166,59 +166,59 @@ func _read_commands():
 
 	commandsDict = data_parse.result
 
-#function to calculate which patches are available
-func _set_visible_patches():
+#function to calculate which updates are available
+func _set_visible_updates():
 	
 	var isAvailable
 	
-	#for each patch where key is patchname as String
-	for key in patchesDict.keys():
+	#for each update where key is updatename as String
+	for key in updatesDict.keys():
 		
 		#reset available checker
 		isAvailable = true
 		
-		#this if statement is to see if the patch is already coded
-		if Global.prev_patches.has(key):
+		#this if statement is to see if the update is already coded
+		if Global.prev_updates.has(key):
 			pass
 		else:
-			#ok, so the patch isn't coded yet. are the prereqs met?
-			for prereq in patchesDict.get(key).pre_reqs:
+			#ok, so the update isn't coded yet. are the prereqs met?
+			for prereq in updatesDict.get(key).pre_reqs:
 				
-				#if the prereq was found in the patchList, do nothing
-				if Global.prev_patches.has(prereq):
+				#if the prereq was found in the updateList, do nothing
+				if Global.prev_updates.has(prereq):
 					pass
 				else:
-					isAvailable = false #missing a prereq! then patch aint available
+					isAvailable = false #missing a prereq! then update aint available
 			if isAvailable:
-				#add the key to the availablePatches array
-				available_patches.append(key)
+				#add the key to the availableUpdates array
+				available_updates.append(key)
 
-#calculates which commands should be available, based on patches already coded
+#calculates which commands should be available, based on updates already coded
 func _set_visible_commands():
-	for patch in Global.prev_patches:
-		for commandString in patchesDict.get(patch).commands:
+	for update in Global.prev_updates:
+		for commandString in updatesDict.get(update).commands:
 			available_commands.append(commandString)
 	available_commands.sort()
 
 #returns the amount of planning remaining, returns -1 if not started
-func _curr_planning(patch) -> int:
+func _curr_planning(update) -> int:
 
 	if Global.curr_plans.size() == 0:
 		return 0
 	
-	for patches in Global.curr_plans:
-		if patches[0] == patch:
-			return patches[1]
+	for updates in Global.curr_plans:
+		if updates[0] == update:
+			return updates[1]
 	return 0
 	
 #add text to the output label
 func _output(text):
 	$VBoxContainer/ScrollContainer/VBoxContainer/Output.text += text
 
-#function assumes all coding pre_reqs and conditions are met, begins coding the patch
-#arg patchname is the key in patchesDict
-func _begin_coding(patchname):
-	Global.curr_patch = patchname
+#function assumes all coding pre_reqs and conditions are met, begins coding the update
+#arg updatename is the key in updatesDict
+func _begin_coding(updatename):
+	Global.curr_update = updatename
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalPrompt.hide()
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalLineInput.hide()
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/Caret.hide()
@@ -228,19 +228,19 @@ func _begin_coding(patchname):
 	
 	Global.curr_state = "coding"
 	
-#called from _process(delta) when Global.patch_elapsed_time == patch.time_req
-func _on_coding_complete(patchname):
+#called from _process(delta) when Global.update_elapsed_time == update.time_req
+func _on_coding_complete(updatename):
 	Global.curr_state = "idle"
-	Global.curr_patch = ""
-	Global.patch_elapsed_time = 0.0
-	Global.prev_patches.append(patchname)
-	Global.prev_patch = patchname
+	Global.curr_update = ""
+	Global.update_elapsed_time = 0.0
+	Global.prev_updates.append(updatename)
+	Global.prev_update = updatename
 	
-	if patchesDict.get(patchname).type == "basic":
+	if updatesDict.get(updatename).type == "basic":
 		Global.version[1] += 1
-	elif patchesDict.get(patchname).type == "complex":
+	elif updatesDict.get(updatename).type == "complex":
 		Global.version[0] += 1
-	elif patchesDict.get(patchname).type == "bug":
+	elif updatesDict.get(updatename).type == "bug":
 		Global.version[2] += 1
 	
 	_output("\n\nSuccess!")
@@ -295,8 +295,8 @@ func _validate_args(inputs) -> bool:
 func _set_terminal_prompt_text():
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalPrompt.text = "C:\\" + Global.my_name + "\\Files\\FIGDES2022>"
 
-#returns key if patch is available or if subpatches are already coded
-func _plan_code_subpatch_helper(inputs):
+#returns key if update is available or if subupdates are already coded
+func _plan_code_subupdate_helper(inputs):
 	
 	var key = ""
 	
@@ -304,34 +304,34 @@ func _plan_code_subpatch_helper(inputs):
 	if _validate_args(inputs) == false:
 		return
 	
-	#get available patches in lowercase format
+	#get available updates in lowercase format
 	#both arrays are in the same order so I can get the caseSensitive key
-	var aPatchesLowercase = []
-	for patch in available_patches:
-		aPatchesLowercase.append(patch.to_lower())
+	var aUpdatesLowercase = []
+	for update in available_updates:
+		aUpdatesLowercase.append(update.to_lower())
 	
-	#if the patch is available
-	if aPatchesLowercase.has(inputs[1].to_lower()):
-		#set key to the case sensitive patchname string by matching index w/ lowercase array
-		key = available_patches[aPatchesLowercase.find(inputs[1].to_lower())]
+	#if the update is available
+	if aUpdatesLowercase.has(inputs[1].to_lower()):
+		#set key to the case sensitive updatename string by matching index w/ lowercase array
+		key = available_updates[aUpdatesLowercase.find(inputs[1].to_lower())]
 	else:
-		#unrecognized patch-name
-		_output("\n\nError: [" + inputs[1] + "] is not recognized as a currently available patch.\n")
+		#unrecognized update-name
+		_output("\n\nError: [" + inputs[1] + "] is not recognized as a currently available update.\n")
 		return
 	
-	#if has sub-patches...
-	if patchesDict.get(key).type == "complex":
+	#if has sub-updates...
+	if updatesDict.get(key).type == "complex":
 		var i = false
 		var remainingChildList = []
-		for child in patchesDict.get(key).children:
-			if not Global.prev_patches.has(child):
+		for child in updatesDict.get(key).children:
+			if not Global.prev_updates.has(child):
 				i = true
 				remainingChildList.append(child)
-		#...you must code all sub patches first!
+		#...you must code all sub updates first!
 		if i:
-			_output("\n\nThe following sub-patches must be coded prior to coding or planning this patch:\n")
-			for patch in remainingChildList:
-				_output("\n" + patch)
+			_output("\n\nThe following sub-updates must be coded prior to coding or planning this update:\n")
+			for update in remainingChildList:
+				_output("\n" + update)
 			_output("\n")
 			return
 	return key
@@ -339,15 +339,15 @@ func _plan_code_subpatch_helper(inputs):
 #this is the while(true)
 func _process(delta):
 	if Global.curr_state == "coding":
-		Global.patch_elapsed_time += delta * Global.time_mult
+		Global.update_elapsed_time += delta * Global.time_mult
 		
-		# display some major mAtRiX hAcKiNg on the screen by applying the ratio of patch_elapsed_time/time_req
+		# display some major mAtRiX hAcKiNg on the screen by applying the ratio of update_elapsed_time/time_req
 		# to the "code" length to get the number of chars of the full string of "code" to display at any given time
-		var fragmentLength = int(Global.patch_elapsed_time / patchesDict.get(Global.curr_patch).time_req * patchesDict.get(Global.curr_patch).code.length())
-		$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = output + str(stepify(patchesDict.get(Global.curr_patch).time_req - Global.patch_elapsed_time, 0.01)) + "\n\n" + patchesDict.get(Global.curr_patch).code.substr(0, fragmentLength)
-		if Global.patch_elapsed_time >= patchesDict.get(Global.curr_patch).time_req:
-			$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = output + "0.00\n" + patchesDict.get(Global.curr_patch).code
-			emit_signal("coding_complete", Global.curr_patch)
+		var fragmentLength = int(Global.update_elapsed_time / updatesDict.get(Global.curr_update).time_req * updatesDict.get(Global.curr_update).code.length())
+		$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = output + str(stepify(updatesDict.get(Global.curr_update).time_req - Global.update_elapsed_time, 0.01)) + "\n\n" + updatesDict.get(Global.curr_update).code.substr(0, fragmentLength)
+		if Global.update_elapsed_time >= updatesDict.get(Global.curr_update).time_req:
+			$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = output + "0.00\n" + updatesDict.get(Global.curr_update).code
+			emit_signal("coding_complete", Global.curr_update)
 
 
 
@@ -386,59 +386,59 @@ func _help(inputs):
 			_output("\n\nUsage:              " + commandsDict.get(inputs[1].to_upper()).usage + "\n")
 			return
 		
-		var aPatchesLowercase = []
-		for patch in available_patches:
-			aPatchesLowercase.append(patch.to_lower())
+		var aUpdatesLowercase = []
+		for update in available_updates:
+			aUpdatesLowercase.append(update.to_lower())
 	
-		#display help for inputs[1] if patch
-		if aPatchesLowercase.has(inputs[1].to_lower()):
+		#display help for inputs[1] if update
+		if aUpdatesLowercase.has(inputs[1].to_lower()):
 			var key = ""
-			#set key to the caseSensitive patchname string by matching index w/ lowercase array
-			key = available_patches[aPatchesLowercase.find(inputs[1].to_lower())]
+			#set key to the caseSensitive updatename string by matching index w/ lowercase array
+			key = available_updates[aUpdatesLowercase.find(inputs[1].to_lower())]
 			
-			_output("\n" + key + spaces + patchesDict.get(key).desc)
-			_output("\n\nType:               " + patchesDict.get(key).type.capitalize())
+			_output("\n" + key + spaces + updatesDict.get(key).desc)
+			_output("\n\nType:               " + updatesDict.get(key).type.capitalize())
 			
-			#display energy required if stats patch is coded
-			if Global.prev_patches.has("addStats"):
-				_output("\nEnergy Required:    " + str(patchesDict.get(key).res_req))
-			_output("\nTime Required:      " + str(patchesDict.get(key).time_req))
+			#display energy required if stats update is coded
+			if Global.prev_updates.has("addStats"):
+				_output("\nEnergy Required:    " + str(updatesDict.get(key).res_req))
+			_output("\nTime Required:      " + str(updatesDict.get(key).time_req))
 			
-			#display planning required if writereq patch is coded
-			if Global.prev_patches.has("writeReq"):
-				_output("\nPlanning Required:  " + str(patchesDict.get(key).plan_req))
+			#display planning required if writereq update is coded
+			if Global.prev_updates.has("writeReq"):
+				_output("\nPlanning Required:  " + str(updatesDict.get(key).plan_req))
 			
-			#display subpatches required if type is Complex
-			if patchesDict.get(key).type == "complex":
-				_output("\nSub-patches Required: " + str(patchesDict.get(key).children).rstrip("]").lstrip("["))
+			#display subupdates required if type is Complex
+			if updatesDict.get(key).type == "complex":
+				_output("\nSub-updates Required: " + str(updatesDict.get(key).children).rstrip("]").lstrip("["))
 			_output("\n")
 			return
 				
 		"""else"""
-		#you typed a non-existant command or patch, silly
-		_output("\n\n[" + inputs[1] + "] is not recognized as a valid command or patch name.\n")
+		#you typed a non-existant command or update, silly
+		_output("\n\n[" + inputs[1] + "] is not recognized as a valid command or update name.\n")
 
 func _code(inputs):
 	
 	"""
-	the criteria to begin coding a patch:
-	1. must be available (all pre_req patches already coded)
+	the criteria to begin coding a update:
+	1. must be available (all pre_req updates already coded)
 	2. must have enough energy to complete (energy must be greater than or equal to res_req)
 	3. must have completed planning
-	4. if there are sub-patches, must code them first
+	4. if there are sub-updates, must code them first
 	"""
 	
-	var key = _plan_code_subpatch_helper(inputs)
+	var key = _plan_code_subupdate_helper(inputs)
 	if key == null:
 		return
 	
-	#if made it past helpr function, then patch is available and subpatches coded
+	#if made it past helpr function, then update is available and subupdates coded
 	
 	#if all necessary planning is complete
-	if _curr_planning(key) >= patchesDict.get(key).plan_req:
+	if _curr_planning(key) >= updatesDict.get(key).plan_req:
 		
 		#...and if player has enough energy
-		if patchesDict.get(key).res_req <= Global.energy:
+		if updatesDict.get(key).res_req <= Global.energy:
 			
 			#then all code conditions are met, allowed to begin coding!
 			_begin_coding(key)
@@ -446,32 +446,32 @@ func _code(inputs):
 		else:
 			#not enough energy
 			_output("\n\nThis task requires more energy.\nYour energy:        " + str(Global.energy))
-			_output("\nRequired energy:    " + str(patchesDict.get(key).res_req) + "\n")
+			_output("\nRequired energy:    " + str(updatesDict.get(key).res_req) + "\n")
 	else:
 		#needs more planning
 		_output("\n\nPlanning is insufficient!")
-		_output("\nTotal planning required:    " + str(patchesDict.get(key).plan_req))
+		_output("\nTotal planning required:    " + str(updatesDict.get(key).plan_req))
 		_output("\nCurrent planning:           " + str(_curr_planning(key)) + "\n")
 		
-func _patches(_inputs):
+func _updates(_inputs):
 	
 	#disclaimers
-	_output("\nPatches are used with the CODE command in the format CODE [patch-name]")
-	_output("\nFor more information on a specific patch, type HELP [patch-name]\n")
+	_output("\nUpdates are used with the CODE command in the format CODE [update-name]")
+	_output("\nFor more information on a specific update, type HELP [update-name]\n")
 	
-	#for each available patch where key is patchname as String
+	#for each available update where key is updatename as String
 	var parentkey
 	var numSpaces
 	var spaces
 	_output("\n")
-	for key in available_patches:
+	for key in available_updates:
 		
 		numSpaces = 20 - key.length()
 		
-		if patchesDict.get(key).type == "complex":
+		if updatesDict.get(key).type == "complex":
 			parentkey = key
 		if not parentkey == null:
-			if patchesDict.get(parentkey).children.has(key):
+			if updatesDict.get(parentkey).children.has(key):
 				numSpaces = 18 - key.length()
 				_output("  ")
 			
@@ -479,27 +479,27 @@ func _patches(_inputs):
 		for _i in range(numSpaces):
 			spaces += " "
 		
-		_output(key + spaces + patchesDict.get(key).desc + "\n")
+		_output(key + spaces + updatesDict.get(key).desc + "\n")
 	_output("\n")
 	
 func _readme(_inputs):
 	
 	_output("\nFully Immersive Game Developer Experience Simulator 2022\n")
 	_output("\nRelease Notes " + Global.get_versionString())
-	for line in patchesDict.get(Global.prev_patch).release_notes:
+	for line in updatesDict.get(Global.prev_update).release_notes:
 		_output("\n - " + line)
 	_output("\n")
 	
 func _plan(inputs):
 	
-	#key = the name of the patch to be planned
-	var key = _plan_code_subpatch_helper(inputs)
+	#key = the name of the update to be planned
+	var key = _plan_code_subupdate_helper(inputs)
 	if key == null:
 		return
 	
 	# if planning is already complete
-	if patchesDict.get(key).plan_req == _curr_planning(key):
-		_output("\n\nPlanning for this patch is already completed!\n")
+	if updatesDict.get(key).plan_req == _curr_planning(key):
+		_output("\n\nPlanning for this update is already completed!\n")
 		return
 	
 	# if player has enough energy
@@ -508,14 +508,14 @@ func _plan(inputs):
 		
 		# has planning already started on this item?
 		for plan in Global.curr_plans:
-			# if yes then ++ the plan number for that patch and subtract an energy
+			# if yes then ++ the plan number for that update and subtract an energy
 			if plan[0] == key:
 				
 				emit_signal("open_plan", key)
 				
 				plan[1] += 1
 				Global.energy += -1
-				_output("\n\nTotal planning required:    " + str(patchesDict.get(key).plan_req))
+				_output("\n\nTotal planning required:    " + str(updatesDict.get(key).plan_req))
 				_output("\nCurrent planning:           " + str(_curr_planning(key)) + "\n")
 				return
 		
@@ -524,7 +524,7 @@ func _plan(inputs):
 		Global.curr_plans.append([key, 1])
 		Global.energy += -1
 		
-		_output("\n\nTotal planning required:    " + str(patchesDict.get(key).plan_req))
+		_output("\n\nTotal planning required:    " + str(updatesDict.get(key).plan_req))
 		_output("\nCurrent planning:           " + str(_curr_planning(key)) + "\n")
 	else:
 		#not enough energy, although this should be impossible
