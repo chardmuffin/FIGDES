@@ -1,0 +1,14 @@
+export_presets.cfg
+project.godot
+.import
+icon.png.import
+caret.png.import
+icon.png.import
+Berkelium1541.ttf
+developer.ttf
+GUI.tscn
+Main.tscn
+Terminal.tscn
+Notepad.tscn
+bach-goldberg-variation-12.ogg.import
+bach-sinfonia-11-g-minor-loop.ogg.import
