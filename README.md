@@ -2,7 +2,7 @@
 ## Description
 Develop the game in-game as you play! You choose what aspects of the game to develop next. Don't want to play in silence? Add music to the game! Getting bored of a text adventure? Develop some graphics! Soon your game will start to generate ad revenue. Then you can hire more developers.
 
-This is a passion project I worked on during the summer of 2020. Unfortunately the project cannot progress further until I find the time to make sprites and art.
+This is a project I worked on during the summer of 2020. Unfortunately the project cannot progress further until I find the time to make sprites and art.
 
 ## Table of Contents
 
@@ -39,10 +39,11 @@ To delete a save on your browser, simply delete your cookies for the site.
 ## Contributing
 
 * Built with GDScript using [Godot](https://godotengine.org/) game engine
-* Professional readme template generated using [https://github.com/chardmuffin/readme-generator-rth](https://github.com/chardmuffin/readme-generator-rth)
+* Berkelium 1541 font provided by the [Kreative Korporation](https://www.kreativekorp.com/software/fonts/FreeLicense.txt)
+* Professional readme template generated using [readme-generator-rth](https://github.com/chardmuffin/readme-generator-rth)
 
 ## Questions
 
-I am on GitHub: [https://github.com/chardmuffin](https://github.com/chardmuffin)
+I am on [GitHub](https://github.com/chardmuffin)
 
 I can also be reached by email at [richardhuffman96@gmail.com](mailto:richardhuffman96@gmail.com)
