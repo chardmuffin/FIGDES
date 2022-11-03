@@ -12,7 +12,6 @@
 			"Added PATCHES command, which displays available new features for coding"],
 		"desc": "Error",
 		"commands":["HELP","README","CODE","PATCHES"],
-		"code": "..."
 	},
 	"play": {
 		"type": "basic",
@@ -53,7 +52,7 @@
 		"release_notes": ["Added a text file for outlining and planning of new game requirements",
 			"Added PLAN command to write plans for complicated patches before they are coded"],
 		"res_req": 0,
-		"time_req": 10,
+		"time_req": 15,
 		"plan_req": 0,
 		"commands":["PLAN"],
 		"code": "func plan(key):
@@ -289,7 +288,7 @@
 			"Added GETMUSIC command to display a list of all available music tracks",
 			"Added SETMUSIC command to change the background music track"],
 		"res_req":0,
-		"time_req":10,
+		"time_req":15,
 		"plan_req":1,
 		"commands":["TOGGLEMUSIC", "GETMUSIC", "SETMUSIC"],
 		"code": "func _togglemusic(_inputs):
