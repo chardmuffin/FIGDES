@@ -3,7 +3,7 @@
 ## Description
 Develop the game in-game as you play! You choose what aspects of the game to develop next. Don't want to play in silence? Add music to the game! Getting bored of a text adventure? Develop some graphics! Soon your game will start to generate ad revenue. Then you can hire more developers.
 
-This is a passion project I worked on during the summer of 2020. Unfortunately the project cannot progress until I find the time to make sprites and art.
+This is a passion project I worked on during the summer of 2020. Unfortunately the project cannot progress further until I find the time to make sprites and art.
 
 ## Installation
 The game is accessible at [https://chardmuffin.github.io/FIGDES/](https://chardmuffin.github.io/FIGDES/) and should be playable from most browsers (not Internet Explorer). It does not currently work on mobile devices (unless you have a physical keyboard).
