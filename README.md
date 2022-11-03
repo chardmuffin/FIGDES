@@ -24,7 +24,7 @@ Some patches require a prior planning phase. Developing the notepad patch unlock
 Save Game capability is unlocked in game.
 Further instructions are given in game.
 
-## Delete a Save
+### Delete a Save
 To delete a save on Windows, navigte to ```%APPDATA%``` in your File Explorer and locate the Godot folder.
 Navigate to Godot > app_userdata > Fully Immersive Game Developer Experience Simulator
 
