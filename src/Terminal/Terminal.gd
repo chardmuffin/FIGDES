@@ -8,7 +8,6 @@ var current_input_length = 0 #used for placing the caret
 var updatesDict = {} #entire JSON of all updates will be loaded here
 var commandsDict = {} #entire JSON of all commands will be loaded here
 var available_updates = [] # list of updates available for coding
-var output = "" # used for temporarily storing the terminal output
 var available_commands = [] # array of all currently available commands
 signal reboot_terminal
 signal coding_complete
@@ -223,9 +222,6 @@ func _begin_coding(updatename):
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalLineInput.hide()
 	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/Caret.hide()
 	
-	#store the output
-	output = $VBoxContainer/ScrollContainer/VBoxContainer/Output.text + "\nTime until completion: "
-	
 	Global.curr_state = "coding"
 	
 #called from _process(delta) when Global.update_elapsed_time == update.time_req
@@ -344,9 +340,9 @@ func _process(delta):
 		# display some major mAtRiX hAcKiNg on the screen by applying the ratio of update_elapsed_time/time_req
 		# to the "code" length to get the number of chars of the full string of "code" to display at any given time
 		var fragmentLength = int(Global.update_elapsed_time / updatesDict.get(Global.curr_update).time_req * updatesDict.get(Global.curr_update).code.length())
-		$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = output + str(stepify(updatesDict.get(Global.curr_update).time_req - Global.update_elapsed_time, 0.01)) + "\n\n" + updatesDict.get(Global.curr_update).code.substr(0, fragmentLength)
+		$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = "\nTime Remaining: " + str(stepify(updatesDict.get(Global.curr_update).time_req - Global.update_elapsed_time, 0.01)) + "\n\n" + updatesDict.get(Global.curr_update).code.substr(0, fragmentLength)
 		if Global.update_elapsed_time >= updatesDict.get(Global.curr_update).time_req:
-			$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = output + "0.00\n" + updatesDict.get(Global.curr_update).code
+			$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = "\nTime Remaining: 0.00\n\n" + updatesDict.get(Global.curr_update).code
 			emit_signal("coding_complete", Global.curr_update)
 
 

@@ -182,6 +182,7 @@ caret_blink_speed = 10.0
 [node name="Caret" type="AnimatedSprite" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 frames = SubResource( 10 )
 animation = "caret"
+frame = 1
 playing = true
 centered = false
 

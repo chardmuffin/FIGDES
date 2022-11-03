@@ -48,11 +48,6 @@ func on_reboot_terminal():
 	if is_instance_valid(terminal):
 		terminal.call_deferred("free")
 	
-	#if init notes for the very first time
-	if Global.prev_update == "writeReq":
-		on_open_notes("first")
-		move_window_to_top(notepad)
-	
 	#if init music for the very first time
 	if Global.prev_update == "music":
 		init_music()
@@ -68,6 +63,10 @@ func on_reboot_terminal():
 	terminal.connect("play",self,"on_play")
 	terminal.connect("move_terminal_to_top", self, "move_window_to_top")
 	terminal.connect("open_plan", self, "on_open_notes")
+	
+	#if init notes for the very first time
+	if Global.prev_update == "writeReq":
+		on_open_notes("first")
 
 #if opening notes without planning, pass in key = null
 func on_open_notes(key):
@@ -102,8 +101,8 @@ func move_window_to_top(node):
 
 func on_play():
 	#terminal.call_deferred("free")
-	if is_instance_valid(notepad):
-		notepad.call_deferred("free")
+	#if is_instance_valid(notepad):
+	#	notepad.call_deferred("free")
 	terminal._output("\n\nYour head starts to hurt. Maybe it's time to go do something else.\n\n(This feature is not yet supported.)")
 	#r = load("res://Room/Room.tscn")
 	#room = r.instance()

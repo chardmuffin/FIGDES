@@ -1,8 +1,9 @@
-# Fully Immersive Game Developer Experience Simulator
+# Fully Immersive Game Developer Experience Simulator 2022
 ## Description
-Develop the game in-game as you play! You choose what aspects of the game to develop next. Don't want to play in silence? Add music to the game! Getting bored of a text adventure? Develop some graphics! Soon your game will start to generate ad revenue. Then you can hire more developers.
-
-This is a project I worked on during the summer of 2020. Unfortunately the project cannot progress further until I find the time to make sprites and art.
+Does your life lack recursion? Fully Immersive Game Developer Experience Simulator 2022 allows you to simulate being a game developer! As an indie developer, you are working on a game called Fully Immersive Game Developer Experience Simulator (FIGDES) which allows players to develop new features for their copy of the game as they play. Players choose which direction to take the game in. If the players don't want silence, they can program music into the game! Getting bored of a text adventure? Then they'll have to create graphics! etc. Your indie developer's game gains a cult following as strange coincidences start to happen...
+ 
+ 
+This is a project I worked on during the summer of 2020. Unfortunately the project cannot progress further until I find the time to learn how to make game sprites and art.
 
 ## Table of Contents
 
@@ -41,6 +42,7 @@ To delete a save on your browser, simply delete your cookies for the site.
 * Built with GDScript using [Godot](https://godotengine.org/) game engine
 * Berkelium 1541 font provided by the [Kreative Korporation](https://www.kreativekorp.com/software/fonts/FreeLicense.txt)
 * Professional readme template generated using [readme-generator-rth](https://github.com/chardmuffin/readme-generator-rth)
+* Music composed by J.S. Bach and recorded using [LMMS](https://lmms.io/)
 
 ## Questions
 
