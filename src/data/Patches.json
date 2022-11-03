@@ -11,7 +11,8 @@
 			"Added README command for displaying release notes from the most recent patch",
 			"Added PATCHES command, which displays available new features for coding"],
 		"desc": "Error",
-		"commands":["HELP","README","CODE","PATCHES"]
+		"commands":["HELP","README","CODE","PATCHES"],
+		"code": "..."
 	},
 	"play": {
 		"type": "basic",
@@ -19,9 +20,10 @@
 		"desc": "Allows developer to play the game",
 		"release_notes": ["Added PLAY command to start the game"],
 		"res_req": 0,
-		"time_req": 1,
+		"time_req": 10,
 		"plan_req": 0,
-		"commands":["PLAY"]
+		"commands":["PLAY"],
+		"code": "..."
 	},
 	"setName": {
 		"type": "basic",
@@ -29,9 +31,20 @@
 		"desc": "Allows personalization of developer name",
 		"release_notes": ["Added SETNAME command to allow user to personalize developer name"],
 		"res_req": 0,
-		"time_req": 1,
+		"time_req": 10,
 		"plan_req": 0,
-		"commands":["SETNAME"]
+		"commands":["SETNAME"],
+		"code": "func _setname(inputs):
+    if _validate_args(inputs) == false:
+        return
+
+    _output('\\n\\n')
+    if inputs.size() > 2:
+        _output('Spaces are not allowed!\\n')
+
+    Global.my_name = inputs[1]
+    _output('Developer name set to \\'' + Global.my_name + '\\'\\n')
+    _set_terminal_prompt_text()"
 	},
 	"writeReq": {
 		"type": "basic",
@@ -40,9 +53,35 @@
 		"release_notes": ["Added a text file for outlining and planning of new game requirements",
 			"Added PLAN command to write plans for complicated patches before they are coded"],
 		"res_req": 0,
-		"time_req": 1,
+		"time_req": 10,
 		"plan_req": 0,
-		"commands":["PLAN"]
+		"commands":["PLAN"],
+		"code": "func plan(key):
+    #key is in Global.curr_plans, the format is:
+    #curr_plans = [['key',0],['key',2],['key',3]]
+    #where key is keyName, and the int is the number of the plan to be written to notepad
+    label.bbcode_text = ''
+    _type_old_notes()
+    call_deferred('_scroll_later')
+
+    #if null key is passed in, we want to open saved notes without writing new plans
+    if key == null:
+        return
+
+    _read_notes()
+
+    var plan_number
+    #get the plan number from the Global.curr_plans array
+    for plan in Global.curr_plans:
+        if plan[0] == key:
+            plan_number = str(plan[1])
+        else:
+            plan_number = '1'
+
+    label.append_bbcode('\\n\\n')
+
+    _type_new_notes(notes.get(key).get(plan_number))
+    Global.notes += '@@' + notes.get(key).get(plan_number)"
 	},
 	"save": {
 		"type": "basic",
@@ -50,9 +89,56 @@
 		"desc": "Adds SAVE command for saving game progress",
 		"release_notes": ["Added SAVE command to allow save game"],
 		"res_req": 0,
-		"time_req": 1,
+		"time_req": 10,
 		"plan_req": 1,
-		"commands":["SAVE"]
+		"commands":["SAVE"],
+		"code": "func save_game():
+    #construct a dictionary containing global data to be saved
+    var data = {
+        'curr_state' : curr_state,
+        'file_name' : file_name,
+        'version' : version,
+        'prev_patch' : prev_patch,
+        'curr_patch' : curr_patch,
+        'random_count' : random_count,
+        'days_count' : days_count,
+        'patch_elapsed_time' : patch_elapsed_time,
+        'max_energy' : max_energy,
+        'max_hunger' : max_hunger,
+        'max_wisdom' : max_wisdom,
+        'max_insanity' : max_insanity,
+        'max_luck' : max_luck,
+        'money' : money,
+        'energy_timer' : energy_timer,
+        'hunger_timer' : hunger_timer,
+        'inside_timer' : inside_timer,
+        'exercise_timer' : exercise_timer,
+        'sleep_timer' : sleep_timer,
+        'my_name' : my_name,
+        'prev_patches' : prev_patches,
+        'energy' : energy,
+        'hunger' : hunger,
+        'wisdom' : wisdom,
+        'insanity' : insanity,
+        'luck' : luck,
+        'curr_plans' : curr_plans,
+        'hasAutoSave': hasAutoSave,
+        'showGUI':showGUI,
+        'food_count':food_count,
+        'isMusicPlaying':isMusicPlaying,
+        'current_music_file': current_music_file,
+        'unlocked_music':unlocked_music,
+        'notes':notes
+    }
+    # Open a file
+    var file = File.new()
+    if file.open('user://saved_game.sav', File.WRITE) != 0:
+        print('Error opening file')
+        return
+
+    # Save the dictionary as JSON
+    file.store_line(to_json(data))
+    file.close()"
 	},
 	"GUI": {
 		"type": "basic",
@@ -61,9 +147,10 @@
 		"release_notes": ["Access Preferences menu by tapping the gear icon",
 			"Added TOGGLEGUI command to toggle the visibility of Graphical User Interface on or off"],
 		"res_req": 2,
-		"time_req": 2,
+		"time_req": 20,
 		"plan_req": 0,
-		"commands":["TOGGLEGUI"]
+		"commands":["TOGGLEGUI"],
+		"code": "..."
 	},
 	"stats":{
 		"type": "complex",
@@ -78,9 +165,18 @@
 			"Removed GETINSANITY command",
 			"Removed GETLUCK command"],
 		"res_req": 1,
-		"time_req": 1,
+		"time_req": 10,
 		"plan_req": 0,
-		"commands":["GETSTATS"]
+		"commands":["GETSTATS"],
+		"code": "func _getstats(_inputs):
+    _output('\\n\\nEnergy:             ' + str(Global.energy))
+    _output('\\nEnergy Timer:       ' + str(Global.energy_timer))
+    _output('\\nHunger:             ' + str(Global.hunger))
+    _output('\\nHunger Timer:       ' + str(Global.hunger_timer))
+    _output('\\nInsanity:           ' + str(Global.insanity))
+    _output('\\nLuck:               ' + str(Global.luck))
+    _output('\\nMoney:              ' + Global.get_money())
+    _output('\\nWisdom:             ' + str(Global.wisdom) + '\\n')"
 	},
 	"energy":{
 		"type":"basic",
@@ -88,9 +184,10 @@
 		"desc":"Adds \"energy\" attribute to the developer",
 		"release_notes":["Added GETENERGY command, which displays current energy and time until energy is replenished by 1"],
 		"res_req":0,
-		"time_req":1,
+		"time_req":10,
 		"plan_req":1,
-		"commands":["GETENERGY"]
+		"commands":["GETENERGY"],
+		"code": "..."
 	},
 	"money":{
 		"type":"basic",
@@ -98,9 +195,10 @@
 		"desc":"Adds \"money\" attribute to the developer",
 		"release_notes":["Added GETMONEY command, which displays current savings"],
 		"res_req":0,
-		"time_req":1,
+		"time_req":10,
 		"plan_req":1,
-		"commands":["GETMONEY"]
+		"commands":["GETMONEY"],
+		"code": "..."
 	},
 	"hunger":{
 		"type":"basic",
@@ -108,9 +206,10 @@
 		"desc":"Adds \"hunger\" attribute to the developer",
 		"release_notes":["Added GETHUNGER command, which displays current hunger and time until it is increased by 1"],
 		"res_req":0,
-		"time_req":1,
+		"time_req":10,
 		"plan_req":1,
-		"commands":["GETHUNGER"]
+		"commands":["GETHUNGER"],
+		"code": "..."
 	},
 	"luck":{
 		"type":"basic",
@@ -118,9 +217,10 @@
 		"desc":"Adds \"luck\" attribute to the developer",
 		"release_notes":["Added GETLUCK command, which displays current luck"],
 		"res_req":0,
-		"time_req":1,
+		"time_req":10,
 		"plan_req":1,
-		"commands":["GETLUCK"]
+		"commands":["GETLUCK"],
+		"code": "..."
 	},
 	"wisdom":{
 		"type":"basic",
@@ -128,9 +228,10 @@
 		"desc":"Adds \"wisdom\" attribute to the developer",
 		"release_notes":["Added GETWISDOM command, which displays current WISDOM"],
 		"res_req":0,
-		"time_req":1,
+		"time_req":10,
 		"plan_req":1,
-		"commands":["GETWISDOM"]
+		"commands":["GETWISDOM"],
+		"code": "..."
 	},
 	"insanity":{
 		"type":"basic",
@@ -138,9 +239,10 @@
 		"desc":"Adds \"insanity\" attribute to the developer",
 		"release_notes":["Added GETINSANITY command, which displays current insanity"],
 		"res_req":0,
-		"time_req":1,
+		"time_req":10,
 		"plan_req":1,
-		"commands":["GETINSANITY"]
+		"commands":["GETINSANITY"],
+		"code": "..."
 	},
 	"shortcuts":{
 		"type":"basic",
@@ -149,9 +251,10 @@
 		"release_notes":["Added shortcut commands 'h','c','r','s' and 'p' which can be used in place of the HELP, CODE, README, SAVE, and PLAN commands, respectively",
 			"Upon startup, \"r\" is now entered instead of \"readme\""],
 		"res_req":0,
-		"time_req":1,
+		"time_req":10,
 		"plan_req":0,
-		"commands":["H","C","S","R","P"]
+		"commands":["H","C","S","R","P"],
+		"code": "..."
 	},
 	"eat":{
 		"type":"complex",
@@ -160,9 +263,10 @@
 		"desc":"Adds EAT command, which causes hunger level to decrease",
 		"release_notes":["Added EAT command, which causes hunger to decrease by 1. Food will be consumed in the process."],
 		"res_req":0,
-		"time_req":1,
+		"time_req":10,
 		"plan_req":1,
-		"commands":["EAT"]
+		"commands":["EAT"],
+		"code": "..."
 	},
 	"buyFood":{
 		"type":"basic",
@@ -170,9 +274,10 @@
 		"desc":"Adds BUYFOOD command, which allows the developer to purchase\n                    food",
 		"release_notes":["Added BUYFOOD command, which increases food count by 1, at the cost of $15"],
 		"res_req":0,
-		"time_req":1,
+		"time_req":10,
 		"plan_req":1,
-		"commands":["BUYFOOD"]
+		"commands":["BUYFOOD"],
+		"code": "..."
 	},
 	"music": {
 		"type":"basic",
@@ -184,8 +289,41 @@
 			"Added GETMUSIC command to display a list of all available music tracks",
 			"Added SETMUSIC command to change the background music track"],
 		"res_req":0,
-		"time_req":1,
+		"time_req":10,
 		"plan_req":1,
-		"commands":["TOGGLEMUSIC", "GETMUSIC", "SETMUSIC"]
+		"commands":["TOGGLEMUSIC", "GETMUSIC", "SETMUSIC"],
+		"code": "func _togglemusic(_inputs):
+    if Global.isMusicPlaying:
+        Global.isMusicPlaying = false
+    else:
+        Global.isMusicPlaying = true
+    get_tree().get_root().get_node('Main').init_music()
+
+func _getmusic(_inputs):
+    _output('\\nCurrent Track: ' + Global.musicDict.get(Global.current_music_file).title + ' by ' + Global.musicDict.get(Global.current_music_file).artist)
+    _output('\\n\\nTrack No.   Artist        Title')
+    var spaces
+    for key in Global.musicDict:
+        spaces = ''
+        if Global.unlocked_music.has(key):
+            for _c in range(14 - Global.musicDict.get(key).artist.length()):
+                spaces += ' '
+            _output('\\n' + key + '           ' + Global.musicDict.get(key).artist + spaces + Global.musicDict.get(key).title)
+        else:
+            _output('\\n' + key + '           ???           ???')
+    _output('\\n')
+
+func _setmusic(inputs):
+    
+    if _validate_args(inputs) == false:
+        return
+    
+    if Global.unlocked_music.has(inputs[1]):
+        call_deferred('free', get_tree().get_root().get_node('Main').m)
+        Global.current_music_file = inputs[1]
+        get_tree().get_root().get_node('Main').init_music()
+    else:
+        _output('\\nInvalid track number!\\n')
+        _getmusic(inputs)"
 	}
 }

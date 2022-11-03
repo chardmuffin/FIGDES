@@ -101,10 +101,11 @@ func move_window_to_top(node):
 	move_child(node, get_child_count() - 1)
 
 func on_play():
-	terminal.call_deferred("free")
+	#terminal.call_deferred("free")
 	if is_instance_valid(notepad):
 		notepad.call_deferred("free")
-	r = load("res://Room/Room.tscn")
-	room = r.instance()
-	add_child(room)
-	room.connect("open_terminal", self, "on_reboot_terminal")
+	terminal._output("\n\nYour head starts to hurt. Maybe it's time to go do something else.\n\n(This feature is not yet supported.)")
+	#r = load("res://Room/Room.tscn")
+	#room = r.instance()
+	#add_child(room)
+	#room.connect("open_terminal", self, "on_reboot_terminal")

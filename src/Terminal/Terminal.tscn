@@ -28,6 +28,10 @@ font_data = ExtResource( 1 )
 size = 8
 font_data = ExtResource( 1 )
 
+[sub_resource type="DynamicFont" id=9]
+size = 8
+font_data = ExtResource( 1 )
+
 [sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0, 0, 0, 1 )
 corner_detail = 1
@@ -35,10 +39,6 @@ corner_detail = 1
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0, 0, 0, 1 )
 corner_detail = 1
-
-[sub_resource type="DynamicFont" id=9]
-size = 8
-font_data = ExtResource( 1 )
 
 [sub_resource type="SpriteFrames" id=10]
 animations = [ {
@@ -56,8 +56,7 @@ margin_bottom = 342.0
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
+"_edit_group_": true
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -90,9 +89,6 @@ margin_bottom = 15.0
 rect_min_size = Vector2( 15, 15 )
 texture = ExtResource( 3 )
 expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="VBoxContainer/HeaderContainer/HeaderBar"]
 anchor_top = 0.5
@@ -103,8 +99,8 @@ margin_right = 158.0
 margin_bottom = 9.5
 rect_min_size = Vector2( 0, 10 )
 size_flags_vertical = 7
-custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
 text = " Developer Console"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -116,9 +112,9 @@ anchor_right = 1.0
 margin_left = -15.0
 margin_bottom = 15.0
 rect_min_size = Vector2( 15, 15 )
-custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.745098, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0.294118, 0, 0, 1 )
+custom_fonts/font = SubResource( 4 )
 text = "x"
 flat = true
 __meta__ = {
@@ -173,10 +169,10 @@ margin_right = 532.0
 margin_bottom = 8.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 9 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/normal = SubResource( 8 )
-custom_fonts/font = SubResource( 9 )
-custom_colors/cursor_color = Color( 0, 0, 0, 1 )
 max_length = 30
 context_menu_enabled = false
 shortcut_keys_enabled = false
@@ -186,9 +182,9 @@ caret_blink_speed = 10.0
 [node name="Caret" type="AnimatedSprite" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 frames = SubResource( 10 )
 animation = "caret"
-frame = 1
 playing = true
 centered = false
+
 [connection signal="gui_input" from="VBoxContainer" to="." method="_on_VBoxContainer_gui_input"]
 [connection signal="gui_input" from="VBoxContainer/HeaderContainer/HeaderBar" to="." method="_on_HeaderBar_gui_input"]
 [connection signal="pressed" from="VBoxContainer/HeaderContainer/HeaderBar/ExitButton" to="." method="_on_ExitButton_pressed"]

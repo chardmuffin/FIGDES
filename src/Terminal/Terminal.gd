@@ -33,7 +33,7 @@ func _ready():
 	connect("coding_complete",self,"_on_coding_complete")
 	
 	#init Output message
-	$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = "\nFully Immersive Game Developer Experience Simulator 2020 " + Global.get_versionString() + "\n(c) 2020 Corporate Corporation, Inc. All Rights Reserved.\n\n"
+	$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = "\nFully Immersive Game Developer Experience Simulator 2022 " + Global.get_versionString() + "\n(c) 2022 Corporate Corporation, Inc. All Rights Reserved.\n\n"
 		
 	#auto type "help on first time playing"
 	var init_input = ""
@@ -162,7 +162,7 @@ func _read_commands():
 	
 	var data_parse = JSON.parse(data_text)
 	if data_parse.error != OK:
-		return "Error while parsing Commands.jason file"
+		return "Error while parsing Commands.json file"
 
 	commandsDict = data_parse.result
 
@@ -293,7 +293,7 @@ func _validate_args(inputs) -> bool:
 
 #sets the promptline text
 func _set_terminal_prompt_text():
-	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalPrompt.text = "C:\\" + Global.my_name + "\\Files\\FIGDES2020>"
+	$VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/TerminalPrompt.text = "C:\\" + Global.my_name + "\\Files\\FIGDES2022>"
 
 #returns key if patch is available or if subpatches are already coded
 func _plan_code_subpatch_helper(inputs):
@@ -340,9 +340,13 @@ func _plan_code_subpatch_helper(inputs):
 func _process(delta):
 	if Global.curr_state == "coding":
 		Global.patch_elapsed_time += delta * Global.time_mult
-		$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = output + str(stepify(patchesDict.get(Global.curr_patch).time_req - Global.patch_elapsed_time, 0.01))
+		
+		# display some major mAtRiX hAcKiNg on the screen by applying the ratio of patch_elapsed_time/time_req
+		# to the "code" length to get the number of chars of the full string of "code" to display at any given time
+		var fragmentLength = int(Global.patch_elapsed_time / patchesDict.get(Global.curr_patch).time_req * patchesDict.get(Global.curr_patch).code.length())
+		$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = output + str(stepify(patchesDict.get(Global.curr_patch).time_req - Global.patch_elapsed_time, 0.01)) + "\n\n" + patchesDict.get(Global.curr_patch).code.substr(0, fragmentLength)
 		if Global.patch_elapsed_time >= patchesDict.get(Global.curr_patch).time_req:
-			$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = output + "0.00"
+			$VBoxContainer/ScrollContainer/VBoxContainer/Output.text = output + "0.00\n" + patchesDict.get(Global.curr_patch).code
 			emit_signal("coding_complete", Global.curr_patch)
 
 
@@ -480,7 +484,7 @@ func _patches(_inputs):
 	
 func _readme(_inputs):
 	
-	_output("\nFully Immersive Game Developer Experience Simulator 2020\n")
+	_output("\nFully Immersive Game Developer Experience Simulator 2022\n")
 	_output("\nRelease Notes " + Global.get_versionString())
 	for line in patchesDict.get(Global.prev_patch).release_notes:
 		_output("\n - " + line)

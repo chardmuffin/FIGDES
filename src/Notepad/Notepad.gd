@@ -83,7 +83,7 @@ func plan(key):
 	#where key is keyName, and the int is the number of the plan to be written to notepad
 	label.bbcode_text = ""
 	_type_old_notes()
-	call_deferred("scroll_later")
+	call_deferred("_scroll_later")
 	
 	#if null key is passed in, we want to open saved notes without writing new plans
 	if key == null:
